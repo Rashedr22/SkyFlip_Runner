@@ -6,10 +6,12 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 10f; // Not used for jump, but for flipping speed
     private Rigidbody2D rb;
     private bool isTop; // Tracks if we are on the ceiling or floor
+    private Animator anim;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
 
     void Update()
@@ -21,6 +23,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             FlipGravity();
+            anim.SetTrigger("Jump");
         }
     }
 
