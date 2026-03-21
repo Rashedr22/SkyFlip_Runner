@@ -461,6 +461,7 @@ GameObject:
   - component: {fileID: 825886410}
   - component: {fileID: 825886409}
   - component: {fileID: 825886412}
+  - component: {fileID: 825886413}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -651,6 +652,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &825886413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825886406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22fd19b8054b5374cbf2daa3d7a5a503, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCollision
 --- !u!1 &944841409
 GameObject:
   m_ObjectHideFlags: 0
@@ -695,7 +708,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c88ef6d7727a7e42a95199db10d02ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelGenerator
-  levelChunkPrefab: {fileID: 7895230504729815077, guid: 67e0f3fe829c2b24bb8061cb4865c7a6, type: 3}
+  levelChunks:
+  - {fileID: 7895230504729815077, guid: 67e0f3fe829c2b24bb8061cb4865c7a6, type: 3}
+  - {fileID: 7895230504729815077, guid: 9f5daf1f7884556429b0978f7e101227, type: 3}
+  - {fileID: 7895230504729815077, guid: b6dcfcb5dd767aa4ea29169671a4f17e, type: 3}
+  - {fileID: 7895230504729815077, guid: 0ed7028f6b95d114ba1048520a1c7ddc, type: 3}
+  - {fileID: 7895230504729815077, guid: 0585bf1edfc5dfe40b7a2fa41e968d35, type: 3}
+  chunkWidth: 20
   player: {fileID: 825886408}
   spawnDistance: 18
 --- !u!1660057539 &9223372036854775807

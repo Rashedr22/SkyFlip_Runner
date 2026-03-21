@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-    public GameObject levelChunkPrefab; // Drag your prefab here
+    public GameObject[] levelChunks; // Drag your prefab here
+    public float chunkWidth = 20f;
     public Transform player;            // Drag your Player here
     public float spawnDistance = 18f;   // How far ahead to spawn
     private Vector3 nextSpawnPoint;
@@ -27,12 +28,21 @@ public class LevelGenerator : MonoBehaviour
 
     void SpawnChunk()
     {
-        // Create the new ground
-        Instantiate(levelChunkPrefab, nextSpawnPoint, Quaternion.identity);
+        GameObject chunkToSpawn;
 
-        // Move the next spawn point forward by the width of your chunk
-        // (Change '20' to match the actual width of your ground sprite)
-        nextSpawnPoint += new Vector3(20, 0, 0);
+        // If it's the very first chunk (spawn point is still at start)
+        if (nextSpawnPoint == Vector3.zero)
+        {
+            chunkToSpawn = levelChunks[0];
+        }
+        else
+        {
+            chunkToSpawn = levelChunks[Random.Range(0, levelChunks.Length)];
+        }
+
+        Instantiate(chunkToSpawn, nextSpawnPoint, Quaternion.identity);
+
+        nextSpawnPoint += new Vector3(chunkWidth, 0, 0);
     }
 }
 
