@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using TMPro;
 public class PlayerCollision : MonoBehaviour
 {
     public GameObject gameOverPanel;
