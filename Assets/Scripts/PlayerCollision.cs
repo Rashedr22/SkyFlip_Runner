@@ -3,6 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class PlayerCollision : MonoBehaviour
 {
+    public GameObject gameOverPanel;
+    public TMPro.TextMeshProUGUI finalScoreText;
+    public ScoreManager scoreManager;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Obstacle"))
@@ -15,7 +19,16 @@ public class PlayerCollision : MonoBehaviour
     {
         Debug.Log("Game Over");
 
-        // Reload current scene
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        // Stop time
+        Time.timeScale = 0f;
+
+        // Stop score
+        scoreManager.StopScore();
+
+        // Show Game Over UI
+        gameOverPanel.SetActive(true);
+
+        // Display final score
+        finalScoreText.text = "Score: " + scoreManager.GetScore();
     }
 }
