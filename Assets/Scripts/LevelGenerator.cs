@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-    public GameObject[] levelChunks; // Drag your prefab here
+    public GameObject[] levelChunks; 
     public float chunkWidth = 20f;
-    public Transform player;            // Drag your Player here
+    public Transform player;            
     public float spawnDistance = 18f;   // How far ahead to spawn
     private Vector3 nextSpawnPoint;
 

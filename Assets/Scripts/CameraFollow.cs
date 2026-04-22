@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform player;  // Drag your Player here
-    public float offsetX;     // How far to the right/left the camera sits
+    public Transform player;  
+    public float offsetX;    
 
     void Start()
     {

@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 10f;
-    public float jumpForce = 15f; // Increased slightly so the jump feels impactful
+    public float jumpForce = 6f; // Increased slightly so the jump feels impactful
 
     private Rigidbody2D rb;
     private Animator anim;
