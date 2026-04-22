@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -47,17 +47,18 @@ public class PlayerController : MonoBehaviour
         // We are in the air now, so we can't jump again until we land
         isGrounded = false;
     }
+    
+     void FlipGravity()
+     {
+         // Flip the physics gravity
+         rb.gravityScale *= -1;
 
-    void FlipGravity()
-    {
-        // Flip the physics gravity
-        rb.gravityScale *= -1;
-
-        // Flip the sprite visually so feet hit the new floor
-        Vector3 scaler = transform.localScale;
-        scaler.y *= -1;
-        transform.localScale = scaler;
-    }
+         // Flip the sprite visually so feet hit the new floor
+         Vector3 scaler = transform.localScale;
+         scaler.y *= -1;
+         transform.localScale = scaler;
+     }
+    
 
     // 4. Ground Check (Unity calls this automatically when you hit a collider)
     void OnCollisionEnter2D(Collision2D collision)
