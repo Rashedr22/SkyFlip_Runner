@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
         crystalCount += amount;
 
         if (crystalText != null)
-            crystalText.text = "Crystals: " + crystalCount;
+            crystalText.text = "  " + crystalCount;
 
         Debug.Log("Crystals: " + crystalCount);
     }

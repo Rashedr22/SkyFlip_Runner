@@ -12,7 +12,7 @@ public class ScoreManager : MonoBehaviour
         if (!isGameOver)
         {
             score += Time.deltaTime * 5; // speed of score
-            scoreText.text = "Score: " + Mathf.FloorToInt(score);
+            scoreText.text = "Distance:  " + Mathf.FloorToInt(score);
         }
     }
 
