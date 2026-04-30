@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
 
     public AudioSource ambience;
     public AudioSource footsteps;
+    public GameObject jumpButton;
+    public GameObject flipButton;
 
     void Awake()
     {
@@ -56,6 +58,8 @@ public class GameManager : MonoBehaviour
         pauseButton.SetActive(false);
         pauseMenu.SetActive(false);
         score.SetActive(false);
+        jumpButton.SetActive(false);
+        flipButton.SetActive(false);
     }
 
     public void ResumeGame()

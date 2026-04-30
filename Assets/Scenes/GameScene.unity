@@ -1724,6 +1724,8 @@ MonoBehaviour:
   crystalText: {fileID: 201066794}
   ambience: {fileID: 1606700001}
   footsteps: {fileID: 509193544}
+  jumpButton: {fileID: 1862473308}
+  flipButton: {fileID: 1276510331}
 --- !u!114 &944841413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1987,7 +1989,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 19.476, y: 472}
+  m_AnchoredPosition: {x: 19.475952, y: 472}
   m_SizeDelta: {x: -884.73, y: -708.48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1268630054

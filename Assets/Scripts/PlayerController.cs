@@ -20,10 +20,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         rb.linearVelocity = new Vector2(moveSpeed, rb.linearVelocity.y);
-
-        // Keep keyboard input for testing in Editor
-        if (Input.GetKeyDown(KeyCode.Space)) Jump();
-        if (Input.GetKeyDown(KeyCode.R)) FlipGravity();
     }
 
     // Called by Jump Button (OnClick)
