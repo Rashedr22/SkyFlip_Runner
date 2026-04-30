@@ -1142,6 +1142,7 @@ MonoBehaviour:
   - {fileID: 7895230504729815077, guid: 54977bc4e1f20684987efa6b7f7caae1, type: 3}
   - {fileID: 7895230504729815077, guid: 44184c407db75a446b90677ea9c5b236, type: 3}
   - {fileID: 7895230504729815077, guid: 5213084f9be3c8343b70b38eb811ebbf, type: 3}
+  - {fileID: 7895230504729815077, guid: 05d3d27cd092d94438ff95da35fa0719, type: 3}
   chunkWidth: 20
   player: {fileID: 825886408}
   spawnDistance: 100
@@ -1665,7 +1666,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
