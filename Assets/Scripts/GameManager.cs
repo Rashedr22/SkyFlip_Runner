@@ -54,19 +54,4 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
     }
 
-    void Start()
-    {
-        LootLockerSDKManager.StartGuestSession((response) =>
-        {
-            if (!response.success)
-            {
-                Debug.Log("error starting LootLocker session");
-
-                return;
-            }
-
-            Debug.Log("successfully started LootLocker session");
-        });
-    }
-
 }
