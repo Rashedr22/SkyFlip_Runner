@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 182cd195a28310e479cddf7ff82822f8, type: 3}
   m_Name: LootLockerConfig
   m_EditorClassIdentifier: lootlocker.lootlockersdk.runtime::LootLocker.LootLockerConfig
-  apiKey: dev_6538957de6204e3aa214455d91f420b3
-  adminToken: 8c6c0d09a85e71e482505e7508d70c10d4b075d8
-  domainKey: ii5bylpe
+  apiKey: 
+  adminToken: 
+  domainKey: 
   game_version: 1.0.0.0
-  sdk_version: 7.2.1
+  sdk_version: 
   logLevel: 2
   prettifyJson: 1
   obfuscateLogs: 1
@@ -28,9 +28,9 @@ MonoBehaviour:
   enablePresenceAutoDisconnectOnFocusChange: 0
   enablePresenceInEditor: 1
   url: https://api.lootlocker.com/v1
-  adminUrl: https://ii5bylpe.api.lootlocker.com/admin
-  playerUrl: https://ii5bylpe.api.lootlocker.com/player
-  userUrl: https://ii5bylpe.api.lootlocker.com/game
-  webSocketBaseUrl: wss://ii5bylpe.api.lootlocker.com/game
-  baseUrl: https://ii5bylpe.api.lootlocker.com
+  adminUrl: https://api.lootlocker.com/admin
+  playerUrl: https://api.lootlocker.com/player
+  userUrl: https://api.lootlocker.com/game
+  webSocketBaseUrl: wss://api.lootlocker.com/game
+  baseUrl: https://api.lootlocker.com
   clientSideRequestTimeOut: 180
