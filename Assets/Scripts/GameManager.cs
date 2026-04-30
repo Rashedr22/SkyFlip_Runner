@@ -1,5 +1,6 @@
-using LootLocker.Requests;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class GameManager : MonoBehaviour
     public GameObject pauseButton;
     public GameObject pauseMenu;
     public GameObject score;
+    public int crystalCount = 0;
+    public TextMeshProUGUI crystalText;
 
     public AudioSource ambience;
     public AudioSource footsteps;
@@ -17,6 +20,25 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+    }
+
+    public void AddCrystal(int amount)
+    {
+        crystalCount += amount;
+
+        if (crystalText != null)
+            crystalText.text = "Crystals: " + crystalCount;
+
+        Debug.Log("Crystals: " + crystalCount);
+    }
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1f;
+
+        isGameOver = false;
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void GameOver()
