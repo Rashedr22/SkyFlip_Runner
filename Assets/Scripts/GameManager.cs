@@ -1,3 +1,4 @@
+using LootLocker.Requests;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -52,4 +53,20 @@ public class GameManager : MonoBehaviour
         pauseButton.SetActive(false);
         Time.timeScale = 0f;
     }
+
+    void Start()
+    {
+        LootLockerSDKManager.StartGuestSession((response) =>
+        {
+            if (!response.success)
+            {
+                Debug.Log("error starting LootLocker session");
+
+                return;
+            }
+
+            Debug.Log("successfully started LootLocker session");
+        });
+    }
+
 }
