@@ -46,20 +46,24 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         if (isGameOver) return;
-
         isGameOver = true;
 
-        Time.timeScale = 0f;
-
+        // Stop audio immediately so the death feels impactful
         if (ambience != null) ambience.Stop();
         if (footsteps != null) footsteps.Stop();
 
-        // UI control
+        // Disable input buttons so player can't jump/flip during the death pause
+        jumpButton.SetActive(false);
+        flipButton.SetActive(false);
+    }
+
+    // Called after the 1-second delay
+    public void FreezeAndHideUI()
+    {
+        Time.timeScale = 0f;
         pauseButton.SetActive(false);
         pauseMenu.SetActive(false);
         score.SetActive(false);
-        jumpButton.SetActive(false);
-        flipButton.SetActive(false);
     }
 
     public void ResumeGame()
