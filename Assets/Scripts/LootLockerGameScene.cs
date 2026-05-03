@@ -8,55 +8,50 @@ public class LootLockerGameScene : MonoBehaviour
     public GameObject leaderboardPanel;
     public TextMeshProUGUI[] leaderboardTexts;
 
-    private const string LeaderboardKey = "main_leaderboard";
-
-    void Awake() { instance = this; }
+    void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
         leaderboardPanel.SetActive(false);
-        // No new session here — LootLockerManager already handles it
     }
 
+    // Called when the player finishes a run
     public void SubmitScore(int score)
     {
         string playerName = PlayerPrefs.GetString("PlayerName", "Guest");
-        string memberId = PlayerPrefs.GetString("LL_PlayerID", "Guest");
 
-        // member ID = unique player, metadata = display name
-        LootLockerSDKManager.SubmitScore(memberId, score, LeaderboardKey, playerName, (res) =>
+        LootLockerSDKManager.SubmitScore(playerName, score, "main_leaderboard", (response) =>
         {
-            if (res.success)
+            if (response.success)
             {
-                Debug.Log("Score submitted: " + score + " by " + playerName);
                 FetchLeaderboard();
-            }
-            else
-            {
-                Debug.LogError("Score submission failed: " + res.errorData?.message);
             }
         });
     }
 
+    // Gets the top 5 scores from all players
     void FetchLeaderboard()
     {
-        LootLockerSDKManager.GetScoreList(LeaderboardKey, 5, (response) =>
+        LootLockerSDKManager.GetScoreList("main_leaderboard", 5, (response) =>
         {
-            if (!response.success)
-            {
-                Debug.LogError("Fetch failed: " + response.errorData?.message);
-                return;
-            }
-
-            Debug.Log("Leaderboard items: " + response.items.Length);
+            if (!response.success) return;
 
             for (int i = 0; i < leaderboardTexts.Length; i++)
             {
                 if (i < response.items.Length)
                 {
-                    var e = response.items[i];
-                    string displayName = string.IsNullOrEmpty(e.metadata) ? "Guest" : e.metadata;
-                    leaderboardTexts[i].text = $"#{e.rank}  {displayName}  {e.score}";
+                    var entry = response.items[i];
+                    string name = entry.player.name;
+
+                    if (string.IsNullOrEmpty(name))
+                    {
+                        name = "Guest";
+                    }
+
+                    leaderboardTexts[i].text = "#" + entry.rank + "  " + name + "  " + entry.score;
                 }
                 else
                 {

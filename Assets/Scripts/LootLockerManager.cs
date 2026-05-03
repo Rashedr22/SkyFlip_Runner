@@ -9,61 +9,65 @@ public class LootLockerManager : MonoBehaviour
     public GameObject nameEntryPanel;
     public TMP_InputField nameInput;
 
-    private const string GameKey = "104825";
-
     void Awake()
     {
-        if (instance != null && instance != this) { Destroy(gameObject); return; }
         instance = this;
-        DontDestroyOnLoad(gameObject); // session persists across scenes
     }
 
     void Start()
     {
         nameEntryPanel.SetActive(false);
 
-        // Reuse stored player ID if we have one — keeps the same identity
-        string storedId = PlayerPrefs.GetString("LL_PlayerID", "");
+        // Check if this device already has a player ID
+        string savedID = PlayerPrefs.GetString("PlayerID", "");
 
-        if (!string.IsNullOrEmpty(storedId))
+        if (savedID == "")
         {
-            LootLockerSDKManager.StartGuestSession(storedId, OnSessionStarted);
-        }
-        else
-        {
-            // First time on this device — let LootLocker generate a new ID
+            // First time — let LootLocker create a new unique player
             LootLockerSDKManager.StartGuestSession((response) =>
             {
                 if (response.success)
                 {
-                    PlayerPrefs.SetString("LL_PlayerID", response.player_identifier);
-                    PlayerPrefs.Save();
-                    Debug.Log("New LootLocker player created: " + response.player_identifier);
+                    PlayerPrefs.SetString("PlayerID", response.player_identifier);
+                    Debug.Log("New player created: " + response.player_identifier);
                 }
-                else Debug.LogError("LootLocker session failed: " + response.errorData?.message);
             });
         }
-    }
-
-    private void OnSessionStarted(LootLockerGuestSessionResponse response)
-    {
-        if (response.success) Debug.Log("LootLocker session restored.");
-        else Debug.LogError("LootLocker session failed.");
+        else
+        {
+            // Returning player — log in with the saved ID
+            LootLockerSDKManager.StartGuestSession(savedID, (response) =>
+            {
+                if (response.success)
+                {
+                    Debug.Log("Returning player: " + savedID);
+                }
+            });
+        }
     }
 
     public void OnPlayPressed()
     {
         if (PlayerPrefs.HasKey("PlayerName"))
+        {
             SceneManager.LoadScene("GameScene");
+        }
         else
+        {
             nameEntryPanel.SetActive(true);
+        }
     }
 
     public void ConfirmName()
     {
-        if (nameInput.text.Trim().Length < 2) return;
-        PlayerPrefs.SetString("PlayerName", nameInput.text.Trim());
-        PlayerPrefs.Save();
-        SceneManager.LoadScene("GameScene");
+        string chosenName = nameInput.text.Trim();
+        if (chosenName.Length < 2) return;
+
+        PlayerPrefs.SetString("PlayerName", chosenName);
+
+        LootLockerSDKManager.SetPlayerName(chosenName, (response) =>
+        {
+            SceneManager.LoadScene("GameScene");
+        });
     }
 }
