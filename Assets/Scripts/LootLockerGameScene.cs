@@ -5,60 +5,58 @@ using LootLocker.Requests;
 public class LootLockerGameScene : MonoBehaviour
 {
     public static LootLockerGameScene instance;
-
     public GameObject leaderboardPanel;
     public TextMeshProUGUI[] leaderboardTexts;
 
-    private string playerName = "";
+    private const string LeaderboardKey = "main_leaderboard";
 
-    void Awake()
-    {
-        instance = this;
-    }
+    void Awake() { instance = this; }
 
     void Start()
     {
         leaderboardPanel.SetActive(false);
-        playerName = PlayerPrefs.GetString("PlayerName", "Guest");
-
-        LootLockerSDKManager.StartGuestSession("104825", (response) =>
-        {
-            if (response.success)
-                Debug.Log("LootLocker connected in game scene.");
-        });
+        // No new session here — LootLockerManager already handles it
     }
 
     public void SubmitScore(int score)
     {
-        string name = PlayerPrefs.GetString("PlayerName", "Guest");
+        string playerName = PlayerPrefs.GetString("PlayerName", "Guest");
+        string memberId = PlayerPrefs.GetString("LL_PlayerID", "Guest");
 
-        LootLockerSDKManager.StartGuestSession((response) =>
+        // member ID = unique player, metadata = display name
+        LootLockerSDKManager.SubmitScore(memberId, score, LeaderboardKey, playerName, (res) =>
         {
-            if (!response.success) return;
-
-            LootLockerSDKManager.SubmitScore(name, score, "main_leaderboard", (res) =>
+            if (res.success)
             {
+                Debug.Log("Score submitted: " + score + " by " + playerName);
                 FetchLeaderboard();
-            });
+            }
+            else
+            {
+                Debug.LogError("Score submission failed: " + res.errorData?.message);
+            }
         });
     }
 
     void FetchLeaderboard()
     {
-        LootLockerSDKManager.GetScoreList("main_leaderboard", 5, (response) =>
+        LootLockerSDKManager.GetScoreList(LeaderboardKey, 5, (response) =>
         {
-            Debug.Log("Fetch response success: " + response.success);
-            if (!response.success) return;
-            Debug.Log("Leaderboard fetched, items: " + response.items.Length);
+            if (!response.success)
+            {
+                Debug.LogError("Fetch failed: " + response.errorData?.message);
+                return;
+            }
 
-            if (!response.success) return;
+            Debug.Log("Leaderboard items: " + response.items.Length);
 
             for (int i = 0; i < leaderboardTexts.Length; i++)
             {
                 if (i < response.items.Length)
                 {
                     var e = response.items[i];
-                    leaderboardTexts[i].text = "#" + e.rank + "  " + e.metadata + "  " + e.score;
+                    string displayName = string.IsNullOrEmpty(e.metadata) ? "Guest" : e.metadata;
+                    leaderboardTexts[i].text = $"#{e.rank}  {displayName}  {e.score}";
                 }
                 else
                 {
