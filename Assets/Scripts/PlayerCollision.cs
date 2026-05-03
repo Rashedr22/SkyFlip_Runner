@@ -32,7 +32,6 @@ public class PlayerCollision : MonoBehaviour
     IEnumerator DelayedGameOver()
     {
         yield return new WaitForSecondsRealtime(1f);
-        GameManager.instance.FreezeAndHideUI();
         ShowGameOverUI();
     }
 

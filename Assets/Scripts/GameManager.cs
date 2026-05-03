@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     public GameObject jumpButton;
     public GameObject flipButton;
 
+    public ScoreManager scoreManager;
+
     void Awake()
     {
         instance = this;
@@ -27,49 +29,44 @@ public class GameManager : MonoBehaviour
     public void AddCrystal(int amount)
     {
         crystalCount += amount;
-
         if (crystalText != null)
             crystalText.text = "  " + crystalCount;
-
-        Debug.Log("Crystals: " + crystalCount);
-    }
-
-    public void RestartGame()
-    {
-        Time.timeScale = 1f;
-
-        isGameOver = false;
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void GameOver()
     {
         if (isGameOver) return;
-        isGameOver = true;
 
-        // Stop audio immediately so the death feels impactful
+        isGameOver = true;
+        Time.timeScale = 0f;
+
         if (ambience != null) ambience.Stop();
         if (footsteps != null) footsteps.Stop();
 
-        // Disable input buttons so player can't jump/flip during the death pause
-        jumpButton.SetActive(false);
-        flipButton.SetActive(false);
-    }
-
-    // Called after the 1-second delay
-    public void FreezeAndHideUI()
-    {
-        Time.timeScale = 0f;
         pauseButton.SetActive(false);
         pauseMenu.SetActive(false);
         score.SetActive(false);
+        jumpButton.SetActive(false);
+        flipButton.SetActive(false);
+
+        Debug.Log("GameOver called, submitting score");
+
+        if (LootLockerGameScene.instance != null)
+            LootLockerGameScene.instance.SubmitScore(scoreManager.GetScore());
+        else
+            Debug.Log("LootLockerGameScene instance is NULL");
+    }
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1f;
+        isGameOver = false;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void ResumeGame()
     {
         if (isGameOver) return;
-
         pauseMenu.SetActive(false);
         pauseButton.SetActive(true);
         Time.timeScale = 1f;
@@ -78,10 +75,8 @@ public class GameManager : MonoBehaviour
     public void PauseGame()
     {
         if (isGameOver) return;
-
         pauseMenu.SetActive(true);
         pauseButton.SetActive(false);
         Time.timeScale = 0f;
     }
-
 }
